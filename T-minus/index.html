@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Live countdown to the 2nd ODI between India and Afghanistan — June 17, 2026 at Ekana Stadium, Lucknow.">
+  <title>T-Minus — IND vs AFG | 2nd ODI Countdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-primary: #0a0f1d;
+      --bg-card: rgba(12, 18, 38, 0.85);
+      --bg-card-border: rgba(255, 255, 255, 0.06);
+      --bg-glass: rgba(255, 255, 255, 0.03);
+
+      --accent-blue: #3b82f6;
+      --accent-blue-glow: rgba(59, 130, 246, 0.35);
+      --accent-gold: #f59e0b;
+      --accent-gold-glow: rgba(245, 158, 11, 0.3);
+      --accent-live: #ef4444;
+      --accent-live-glow: rgba(239, 68, 68, 0.5);
+
+      --team-ind: #1e40af;
+      --team-ind-light: #3b82f6;
+      --team-afg: #991b1b;
+      --team-afg-light: #ef4444;
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Roboto Mono', 'Cascadia Code', monospace;
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 36px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+
+      --countdown-size: clamp(2.4rem, 5vw, 4.2rem);
+      --countdown-label: clamp(0.6rem, 1.2vw, 0.75rem);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url('bg.png') center/cover no-repeat;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(30, 64, 175, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(153, 27, 27, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    main {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 780px;
+      padding: var(--space-lg);
+    }
+
+    /* ─── Broadcast Card ─── */
+    .broadcast-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      box-shadow:
+        0 4px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .broadcast-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(59, 130, 246, 0.4),
+        rgba(245, 158, 11, 0.4),
+        transparent
+      );
+    }
+
+    /* ─── Header Bar ─── */
+    .header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--bg-card-border);
+      background: var(--bg-glass);
+    }
+
+    .series-tag {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .series-tag .icc-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .series-info {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .series-info strong {
+      color: var(--accent-gold);
+    }
+
+    .format-pill {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--accent-blue), #6366f1);
+      padding: 4px 14px;
+      border-radius: 50px;
+    }
+
+    /* ─── Match Stage ─── */
+    .match-stage {
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .teams-container {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .team-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg) var(--space-sm);
+      border-radius: var(--radius-lg);
+      background: var(--bg-glass);
+      border: 1px solid var(--bg-card-border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .team-card--ind { border-bottom: 3px solid var(--team-ind); }
+    .team-card--afg { border-bottom: 3px solid var(--team-afg); }
+
+    .team-card--ind:hover {
+      box-shadow: 0 12px 40px rgba(30, 64, 175, 0.15);
+    }
+
+    .team-card--afg:hover {
+      box-shadow: 0 12px 40px rgba(153, 27, 27, 0.15);
+    }
+
+    .team-badge {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .team-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-name {
+      font-size: clamp(0.85rem, 1.8vw, 1rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .team-code {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: 0.05em;
+    }
+
+    .team-card--ind .team-code { color: var(--team-ind-light); }
+    .team-card--afg .team-code { color: var(--team-afg-light); }
+
+    .team-captain {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .team-captain strong {
+      color: var(--text-secondary);
+    }
+
+    .vs-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .vs-badge {
+      font-family: var(--font-sans);
+      font-size: clamp(1rem, 2.2vw, 1.4rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 2px solid var(--bg-card-border);
+      background: var(--bg-glass);
+      position: relative;
+    }
+
+    .vs-badge::before,
+    .vs-badge::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, transparent, var(--bg-card-border), transparent);
+    }
+
+    .vs-badge::before { top: -32px; }
+    .vs-badge::after  { bottom: -32px; }
+
+    /* ─── Match Meta ─── */
+    .match-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm) var(--space-lg);
+      padding: var(--space-md) var(--space-lg);
+      border-top: 1px solid var(--bg-card-border);
+      border-bottom: 1px solid var(--bg-card-border);
+      background: var(--bg-glass);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .meta-item svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .meta-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    /* ─── Countdown Section ─── */
+    .countdown-section {
+      padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+      text-align: center;
+    }
+
+    .t-minus-header {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      animation: pulse-ring 2s ease-in-out infinite;
+      position: relative;
+    }
+
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-gold);
+      opacity: 0;
+      animation: pulse-expand 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    @keyframes pulse-expand {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    .t-minus-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+
+    .countdown-display {
+      font-family: var(--font-mono);
+      font-size: var(--countdown-size);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-sm);
+      line-height: 1;
+    }
+
+    .countdown-prefix {
+      font-family: var(--font-sans);
+      font-weight: 900;
+      font-size: calc(var(--countdown-size) * 0.55);
+      letter-spacing: 0.15em;
+      color: var(--accent-gold);
+      margin-right: var(--space-sm);
+      text-shadow: 0 0 20px var(--accent-gold-glow);
+    }
+
+    .countdown-block {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: clamp(48px, 10vw, 80px);
+    }
+
+    .countdown-value {
+      display: block;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm) var(--space-md);
+      min-width: clamp(56px, 12vw, 88px);
+      transition: color 0.3s ease;
+    }
+
+    .countdown-unit {
+      font-family: var(--font-sans);
+      font-size: var(--countdown-label);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .countdown-separator {
+      font-size: calc(var(--countdown-size) * 0.7);
+      color: var(--text-muted);
+      padding: 0 2px;
+      align-self: flex-start;
+      margin-top: var(--space-sm);
+      animation: blink-sep 1s step-end infinite;
+    }
+
+    @keyframes blink-sep {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .countdown-suffix {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: calc(var(--countdown-size) * 0.4);
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-left: var(--space-md);
+      align-self: center;
+    }
+
+    /* Days row */
+    .days-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .days-value {
+      font-family: var(--font-mono);
+      font-size: clamp(3.5rem, 7vw, 5.5rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+      background: linear-gradient(180deg, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .days-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ─── Watch Info Footer ─── */
+    .watch-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm) var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--bg-glass);
+      border-top: 1px solid var(--bg-card-border);
+    }
+
+    .watch-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .watch-channel {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--bg-card-border);
+      padding: 3px 12px;
+      border-radius: 50px;
+      transition: background 0.2s ease, color 0.2s ease;
+      cursor: default;
+    }
+
+    .watch-channel:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    /* ─── LIVE State ─── */
+    .broadcast-card[data-state="live"] .countdown-section {
+      padding: var(--space-2xl) var(--space-lg);
+    }
+
+    .live-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-lg);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .broadcast-card[data-state="live"] .countdown-active { display: none; }
+    .broadcast-card[data-state="live"] .live-state { display: flex; }
+
+    .live-badge-container {
+      position: relative;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--accent-live);
+      padding: 10px 32px;
+      border-radius: 50px;
+      box-shadow: 0 0 30px var(--accent-live-glow), 0 0 60px rgba(239, 68, 68, 0.2);
+      animation: live-glow 2s ease-in-out infinite;
+    }
+
+    .live-badge .dot {
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      animation: pulse-ring 1.5s ease-in-out infinite;
+    }
+
+    @keyframes live-glow {
+      0%, 100% { box-shadow: 0 0 30px var(--accent-live-glow), 0 0 60px rgba(239, 68, 68, 0.2); }
+      50% { box-shadow: 0 0 50px var(--accent-live-glow), 0 0 100px rgba(239, 68, 68, 0.3); }
+    }
+
+    .live-text {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .live-text strong {
+      color: var(--text-primary);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      main { padding: var(--space-md); }
+
+      .broadcast-card { border-radius: var(--radius-lg); }
+
+      .header-bar {
+        flex-direction: column;
+        gap: var(--space-sm);
+        text-align: center;
+      }
+
+      .teams-container {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .team-card {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: var(--space-md) var(--space-lg);
+        gap: var(--space-md);
+      }
+
+      .team-badge {
+        width: 52px;
+        height: 52px;
+      }
+
+      .team-info-mobile {
+        text-align: left;
+      }
+
+      .vs-divider {
+        flex-direction: row;
+      }
+
+      .vs-badge::before,
+      .vs-badge::after {
+        width: 40px;
+        height: 1px;
+      }
+
+      .vs-badge::before { top: auto; left: -48px; }
+      .vs-badge::after  { bottom: auto; right: -48px; top: auto; }
+
+      .vs-badge {
+        width: 44px;
+        height: 44px;
+        font-size: 0.9rem;
+      }
+
+      .match-meta {
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .meta-dot { display: none; }
+
+      .countdown-display {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
+
+      .countdown-prefix {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: var(--space-sm);
+      }
+
+      .countdown-suffix {
+        width: 100%;
+        margin-left: 0;
+        margin-top: var(--space-sm);
+      }
+
+      .watch-footer {
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+    }
+
+    @media (min-width: 641px) and (max-width: 900px) {
+      .team-badge {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    /* ─── Accessible focus ─── */
+    :focus-visible {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <article class="broadcast-card" data-state="countdown" id="broadcast-card">
+
+      <header class="header-bar">
+        <nav class="series-tag" aria-label="Series information">
+          <span class="icc-badge">ICC</span>
+          <span class="series-info">ODI Series &middot; 2 of 3 &middot; <strong>IND lead 1-0</strong></span>
+        </nav>
+        <span class="format-pill">50-Over ODI</span>
+      </header>
+
+      <section class="match-stage" aria-label="Match teams">
+        <div class="teams-container">
+
+          <figure class="team-card team-card--ind" aria-label="India">
+            <div class="team-badge">
+              <img src="india-badge.png" alt="India Cricket" width="72" height="72" loading="eager">
+            </div>
+            <figcaption>
+              <p class="team-code">IND</p>
+              <p class="team-name">India</p>
+              <p class="team-captain">C: <strong>Shubman Gill</strong></p>
+            </figcaption>
+          </figure>
+
+          <div class="vs-divider" role="separator">
+            <span class="vs-badge" aria-hidden="true">VS</span>
+          </div>
+
+          <figure class="team-card team-card--afg" aria-label="Afghanistan">
+            <div class="team-badge">
+              <img src="afg-badge.png" alt="Afghanistan Cricket" width="72" height="72" loading="eager">
+            </div>
+            <figcaption>
+              <p class="team-code">AFG</p>
+              <p class="team-name">Afghanistan</p>
+              <p class="team-captain">C: <strong>H. Shahidi</strong></p>
+            </figcaption>
+          </figure>
+
+        </div>
+      </section>
+
+      <aside class="match-meta" aria-label="Match details">
+        <span class="meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
+          <time datetime="2026-06-17T13:30:00+05:30">Wed, Jun 17 &middot; 1:30 PM IST</time>
+        </span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span class="meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+          Ekana Stadium, Lucknow
+        </span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span class="meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+          Day/Night
+        </span>
+      </aside>
+
+      <section class="countdown-section" aria-label="Match countdown" aria-live="polite">
+
+        <div class="countdown-active" id="countdown-active">
+          <div class="t-minus-header">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span class="t-minus-label">Countdown to Next Match</span>
+            <span class="pulse-dot" aria-hidden="true"></span>
+          </div>
+
+          <div class="days-row" id="days-row">
+            <span class="days-value" id="days-value">--</span>
+            <span class="days-label" id="days-label">Days</span>
+          </div>
+
+          <output class="countdown-display" id="countdown-display" role="timer">
+            <span class="countdown-prefix">T–</span>
+
+            <span class="countdown-block">
+              <span class="countdown-value" id="cd-hours">--</span>
+              <span class="countdown-unit">Hours</span>
+            </span>
+
+            <span class="countdown-separator" aria-hidden="true">:</span>
+
+            <span class="countdown-block">
+              <span class="countdown-value" id="cd-minutes">--</span>
+              <span class="countdown-unit">Min</span>
+            </span>
+
+            <span class="countdown-separator" aria-hidden="true">:</span>
+
+            <span class="countdown-block">
+              <span class="countdown-value" id="cd-seconds">--</span>
+              <span class="countdown-unit">Sec</span>
+            </span>
+
+            <span class="countdown-suffix">TO GO</span>
+          </output>
+        </div>
+
+        <div class="live-state" id="live-state">
+          <div class="live-badge-container">
+            <span class="live-badge"><span class="dot"></span> MATCH IS LIVE</span>
+          </div>
+          <p class="live-text"><strong>India vs Afghanistan</strong> &mdash; 2nd ODI has started!</p>
+        </div>
+
+      </section>
+
+      <footer class="watch-footer">
+        <span class="watch-label">Watch Live On</span>
+        <span class="watch-channel">Star Sports</span>
+        <span class="watch-channel">JioHotstar</span>
+      </footer>
+
+    </article>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const MATCH_DATE = new Date('2026-06-17T13:30:00+05:30');
+
+      const card   = document.getElementById('broadcast-card');
+      const daysEl = document.getElementById('days-value');
+      const daysLb = document.getElementById('days-label');
+      const daysRw = document.getElementById('days-row');
+      const hoursEl   = document.getElementById('cd-hours');
+      const minutesEl = document.getElementById('cd-minutes');
+      const secondsEl = document.getElementById('cd-seconds');
+
+      function pad(n) {
+        return String(n).padStart(2, '0');
+      }
+
+      function tick() {
+        const now  = Date.now();
+        const diff = MATCH_DATE.getTime() - now;
+
+        if (diff <= 0) {
+          card.setAttribute('data-state', 'live');
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days    = Math.floor(totalSeconds / 86400);
+        const hours   = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        if (days > 0) {
+          daysRw.style.display = '';
+          daysEl.textContent = pad(days);
+          daysLb.textContent = days === 1 ? 'Day' : 'Days';
+        } else {
+          daysRw.style.display = 'none';
+        }
+
+        hoursEl.textContent   = pad(hours);
+        minutesEl.textContent = pad(minutes);
+        secondsEl.textContent = pad(seconds);
+
+        requestAnimationFrame(() => {
+          setTimeout(tick, 1000 - (Date.now() % 1000));
+        });
+      }
+
+      tick();
+    })();
+  </script>
+</body>
+</html>
