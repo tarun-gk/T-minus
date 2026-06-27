@@ -3,869 +3,1425 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Live countdown to the 2nd ODI between India and Afghanistan — June 17, 2026 at Ekana Stadium, Lucknow.">
-  <title>T-Minus — IND vs AFG | 2nd ODI Countdown</title>
+  <meta name="description" content="FIFA World Cup 2026 — Argentina vs Cabo Verde | Round of 32 | T-Minus Countdown">
+  <title>FIFA WC 2026 · ARG vs CPV · Kickoff Countdown</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-primary: #0a0f1d;
-      --bg-card: rgba(12, 18, 38, 0.85);
-      --bg-card-border: rgba(255, 255, 255, 0.06);
-      --bg-glass: rgba(255, 255, 255, 0.03);
-
-      --accent-blue: #3b82f6;
-      --accent-blue-glow: rgba(59, 130, 246, 0.35);
-      --accent-gold: #f59e0b;
-      --accent-gold-glow: rgba(245, 158, 11, 0.3);
-      --accent-live: #ef4444;
-      --accent-live-glow: rgba(239, 68, 68, 0.5);
-
-      --team-ind: #1e40af;
-      --team-ind-light: #3b82f6;
-      --team-afg: #991b1b;
-      --team-afg-light: #ef4444;
-
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'Roboto Mono', 'Cascadia Code', monospace;
-
-      --radius-sm: 6px;
-      --radius-md: 12px;
-      --radius-lg: 20px;
-      --radius-xl: 28px;
-
-      --space-xs: 4px;
-      --space-sm: 8px;
-      --space-md: 16px;
-      --space-lg: 24px;
-      --space-xl: 36px;
-      --space-2xl: 48px;
-      --space-3xl: 64px;
-
-      --countdown-size: clamp(2.4rem, 5vw, 4.2rem);
-      --countdown-label: clamp(0.6rem, 1.2vw, 0.75rem);
+      /* Argentina colors */
+      --arg-sky:   #74ACDF;
+      --arg-light: #A8CBF0;
+      --arg-white: #FFFFFF;
+      /* Cabo Verde colors */
+      --cpv-blue:  #003893;
+      --cpv-red:   #CF2027;
+      --cpv-yellow:#F7D116;
+      --cpv-light: #4060C0;
+      /* Neutral */
+      --bg-void:   #060810;
+      --bg-deep:   #0a0d1a;
+      --bg-card:   rgba(10,14,30,0.92);
+      --glass-border: rgba(255,255,255,0.08);
+      --text-hi:   #F0F4FF;
+      --text-mid:  #8B9EC7;
+      --text-lo:   #4A5578;
+      /* Gold accent for WC trophy vibe */
+      --gold:      #E8B93A;
+      --gold-dim:  rgba(232,185,58,0.25);
+      /* fonts */
+      --font-display: 'Bebas Neue', Impact, sans-serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-mono:    'Space Mono', monospace;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: var(--font-sans);
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      font-family: var(--font-body);
+      background: var(--bg-void);
+      color: var(--text-hi);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       overflow-x: hidden;
       position: relative;
     }
 
-    body::before {
-      content: '';
+    /* ── BACKGROUND AURORA ── */
+    #bg-canvas {
       position: fixed;
       inset: 0;
-      background: url('bg.png') center/cover no-repeat;
-      opacity: 0.3;
       z-index: 0;
+      pointer-events: none;
     }
 
-    body::after {
-      content: '';
+    .aurora {
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(30, 64, 175, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(153, 27, 27, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
       z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 55% at 20% 40%, rgba(116,172,223,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 55% at 80% 60%, rgba(0,56,147,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 90%, rgba(207,32,39,0.10) 0%, transparent 60%);
     }
 
+    /* ── MAIN WRAPPER ── */
     main {
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 780px;
-      padding: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
     }
 
-    /* ─── Broadcast Card ─── */
-    .broadcast-card {
-      background: var(--bg-card);
-      border: 1px solid var(--bg-card-border);
-      border-radius: var(--radius-xl);
-      backdrop-filter: blur(24px) saturate(1.4);
-      -webkit-backdrop-filter: blur(24px) saturate(1.4);
-      box-shadow:
-        0 4px 60px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-        0 1px 0 rgba(255, 255, 255, 0.06) inset;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .broadcast-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(59, 130, 246, 0.4),
-        rgba(245, 158, 11, 0.4),
-        transparent
-      );
-    }
-
-    /* ─── Header Bar ─── */
-    .header-bar {
+    /* ── WORLD CUP HEADER STRIP ── */
+    .wc-strip {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: var(--space-md) var(--space-lg);
-      border-bottom: 1px solid var(--bg-card-border);
-      background: var(--bg-glass);
+      padding: 10px 20px;
+      margin-bottom: 12px;
+      background: rgba(232,185,58,0.06);
+      border: 1px solid rgba(232,185,58,0.2);
+      border-radius: 50px;
+      backdrop-filter: blur(12px);
     }
 
-    .series-tag {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
+    .wc-trophy {
+      font-size: 1.3rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 8px var(--gold));
     }
 
-    .series-tag .icc-badge {
-      font-size: 0.65rem;
+    .wc-label {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(232,185,58,0.5);
+    }
+
+    .wc-badge {
+      font-family: var(--font-body);
+      font-size: 0.62rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--accent-blue);
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      padding: 3px 10px;
+      color: var(--bg-void);
+      background: var(--gold);
+      padding: 4px 12px;
       border-radius: 50px;
     }
 
-    .series-info {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
-    }
-
-    .series-info strong {
-      color: var(--accent-gold);
-    }
-
-    .format-pill {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      background: linear-gradient(135deg, var(--accent-blue), #6366f1);
-      padding: 4px 14px;
-      border-radius: 50px;
-    }
-
-    /* ─── Match Stage ─── */
-    .match-stage {
-      padding: var(--space-xl) var(--space-lg) var(--space-lg);
-    }
-
-    .teams-container {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: var(--space-md);
-    }
-
-    .team-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-md);
-      padding: var(--space-lg) var(--space-sm);
-      border-radius: var(--radius-lg);
-      background: var(--bg-glass);
-      border: 1px solid var(--bg-card-border);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: default;
-    }
-
-    .team-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .team-card--ind { border-bottom: 3px solid var(--team-ind); }
-    .team-card--afg { border-bottom: 3px solid var(--team-afg); }
-
-    .team-card--ind:hover {
-      box-shadow: 0 12px 40px rgba(30, 64, 175, 0.15);
-    }
-
-    .team-card--afg:hover {
-      box-shadow: 0 12px 40px rgba(153, 27, 27, 0.15);
-    }
-
-    .team-badge {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
+    /* ── BROADCAST CARD ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      backdrop-filter: blur(32px) saturate(1.5);
       overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .team-badge img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .team-name {
-      font-size: clamp(0.85rem, 1.8vw, 1rem);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .team-code {
-      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-      font-weight: 900;
-      letter-spacing: 0.05em;
-    }
-
-    .team-card--ind .team-code { color: var(--team-ind-light); }
-    .team-card--afg .team-code { color: var(--team-afg-light); }
-
-    .team-captain {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .team-captain strong {
-      color: var(--text-secondary);
-    }
-
-    .vs-divider {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .vs-badge {
-      font-family: var(--font-sans);
-      font-size: clamp(1rem, 2.2vw, 1.4rem);
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      width: 56px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      border: 2px solid var(--bg-card-border);
-      background: var(--bg-glass);
       position: relative;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04) inset,
+        0 40px 80px rgba(0,0,0,0.6),
+        0 0 120px rgba(116,172,223,0.06),
+        0 0 120px rgba(0,56,147,0.06);
+      transition: box-shadow 0.4s ease;
     }
 
-    .vs-badge::before,
-    .vs-badge::after {
+    /* Diagonal team color split */
+    .card::before {
       content: '';
       position: absolute;
-      width: 1px;
-      height: 28px;
-      background: linear-gradient(to bottom, transparent, var(--bg-card-border), transparent);
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(116,172,223,0.07) 0%,
+        rgba(116,172,223,0.04) 45%,
+        transparent 50%,
+        rgba(0,56,147,0.04) 55%,
+        rgba(0,56,147,0.08) 100%
+      );
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .vs-badge::before { top: -32px; }
-    .vs-badge::after  { bottom: -32px; }
+    /* Top shimmer line */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--arg-sky) 25%,
+        var(--gold) 50%,
+        var(--cpv-blue) 75%,
+        transparent 100%
+      );
+      z-index: 1;
+    }
 
-    /* ─── Match Meta ─── */
+    .card > * { position: relative; z-index: 2; }
+
+    /* ── MATCH META ROW ── */
     .match-meta {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: var(--space-sm) var(--space-lg);
-      padding: var(--space-md) var(--space-lg);
-      border-top: 1px solid var(--bg-card-border);
-      border-bottom: 1px solid var(--bg-card-border);
-      background: var(--bg-glass);
+      gap: 8px 20px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.02);
     }
 
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .meta-item svg {
-      width: 14px;
-      height: 14px;
-      opacity: 0.6;
-      flex-shrink: 0;
-    }
-
-    .meta-dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: var(--text-muted);
-    }
-
-    /* ─── Countdown Section ─── */
-    .countdown-section {
-      padding: var(--space-xl) var(--space-lg) var(--space-2xl);
-      text-align: center;
-    }
-
-    .t-minus-header {
+    .meta-chip {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-lg);
+      gap: 6px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-mid);
     }
 
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent-gold);
-      border-radius: 50%;
-      animation: pulse-ring 2s ease-in-out infinite;
+    .meta-chip svg { width: 12px; height: 12px; opacity: 0.7; }
+    .meta-chip strong { color: var(--gold); }
+    .meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-lo); }
+
+    /* ── THREE.JS GLOBE STAGE ── */
+    .globe-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
+      padding: 20px 0 0;
     }
 
-    .pulse-dot::after {
+    #three-canvas {
+      display: block;
+      border-radius: 50%;
+      cursor: grab;
+    }
+
+    #three-canvas:active { cursor: grabbing; }
+
+    /* ── TEAMS SECTION ── */
+    .teams-section {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px 24px;
+    }
+
+    /* TEAM CARD */
+    .team-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 12px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.02);
+      cursor: default;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
+                  box-shadow 0.35s ease,
+                  border-color 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 600px;
+    }
+
+    .team-block--arg {
+      border-bottom: 2px solid var(--arg-sky);
+    }
+
+    .team-block--cpv {
+      border-bottom: 2px solid var(--cpv-blue);
+    }
+
+    .team-block--arg:hover {
+      transform: translateY(-8px) rotateY(4deg);
+      box-shadow: -12px 20px 50px rgba(116,172,223,0.2),
+                   0 0 30px rgba(116,172,223,0.1);
+      border-color: rgba(116,172,223,0.35);
+    }
+
+    .team-block--cpv:hover {
+      transform: translateY(-8px) rotateY(-4deg);
+      box-shadow: 12px 20px 50px rgba(0,56,147,0.25),
+                  0 0 30px rgba(207,32,39,0.1);
+      border-color: rgba(0,56,147,0.4);
+    }
+
+    /* Flag ring */
+    .flag-ring {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.8rem;
+      line-height: 1;
+      position: relative;
+      transition: transform 0.35s ease;
+    }
+
+    .team-block:hover .flag-ring { transform: scale(1.1) rotateZ(3deg); }
+
+    .flag-ring::before {
       content: '';
       position: absolute;
       inset: -4px;
       border-radius: 50%;
-      border: 2px solid var(--accent-gold);
-      opacity: 0;
-      animation: pulse-expand 2s ease-in-out infinite;
+      padding: 2px;
+      background: conic-gradient(from 0deg, transparent, currentColor, transparent, transparent);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: spin-ring 8s linear infinite;
     }
 
-    @keyframes pulse-ring {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.2); }
+    .team-block--arg .flag-ring { color: var(--arg-sky); }
+    .team-block--cpv .flag-ring { color: var(--cpv-blue); }
+
+    @keyframes spin-ring {
+      to { transform: rotate(360deg); }
     }
 
-    @keyframes pulse-expand {
-      0% { transform: scale(1); opacity: 0.6; }
-      100% { transform: scale(2.5); opacity: 0; }
+    .team-code {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      letter-spacing: 0.08em;
+      line-height: 1;
     }
 
-    .t-minus-label {
-      font-size: 0.7rem;
+    .team-block--arg .team-code { color: var(--arg-sky); text-shadow: 0 0 20px rgba(116,172,223,0.5); }
+    .team-block--cpv .team-code { color: var(--cpv-light); text-shadow: 0 0 20px rgba(64,96,192,0.5); }
+
+    .team-fullname {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+
+    .team-rank {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      background: rgba(232,185,58,0.12);
+      border: 1px solid rgba(232,185,58,0.25);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    /* VS ORBS */
+    .vs-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vs-orb {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--text-lo);
+      box-shadow: 0 0 30px rgba(232,185,58,0.08), inset 0 1px 0 rgba(255,255,255,0.1);
+      animation: orb-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes orb-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(232,185,58,0.08); }
+      50% { box-shadow: 0 0 40px rgba(232,185,58,0.18), 0 0 80px rgba(232,185,58,0.06); }
+    }
+
+    /* ── PLAYERS SECTION ── */
+    .players-section {
+      padding: 0 24px 28px;
+    }
+
+    .section-eyebrow {
+      font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--accent-gold);
-    }
-
-    .countdown-display {
-      font-family: var(--font-mono);
-      font-size: var(--countdown-size);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--text-primary);
+      color: var(--text-lo);
+      text-align: center;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: var(--space-xs);
-      margin-bottom: var(--space-sm);
-      line-height: 1;
+      gap: 12px;
     }
 
-    .countdown-prefix {
-      font-family: var(--font-sans);
-      font-weight: 900;
-      font-size: calc(var(--countdown-size) * 0.55);
-      letter-spacing: 0.15em;
-      color: var(--accent-gold);
-      margin-right: var(--space-sm);
-      text-shadow: 0 0 20px var(--accent-gold-glow);
+    .section-eyebrow::before,
+    .section-eyebrow::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--text-lo));
     }
 
-    .countdown-block {
-      display: inline-flex;
+    .section-eyebrow::after { background: linear-gradient(to left, transparent, var(--text-lo)); }
+
+    .players-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .players-col {
+      display: flex;
       flex-direction: column;
-      align-items: center;
-      min-width: clamp(48px, 10vw, 80px);
+      gap: 8px;
     }
 
-    .countdown-value {
-      display: block;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius-md);
-      padding: var(--space-sm) var(--space-md);
-      min-width: clamp(56px, 12vw, 88px);
-      transition: color 0.3s ease;
-    }
-
-    .countdown-unit {
-      font-family: var(--font-sans);
-      font-size: var(--countdown-label);
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    .countdown-separator {
-      font-size: calc(var(--countdown-size) * 0.7);
-      color: var(--text-muted);
-      padding: 0 2px;
-      align-self: flex-start;
-      margin-top: var(--space-sm);
-      animation: blink-sep 1s step-end infinite;
-    }
-
-    @keyframes blink-sep {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-
-    .countdown-suffix {
-      font-family: var(--font-sans);
-      font-weight: 800;
-      font-size: calc(var(--countdown-size) * 0.4);
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      margin-left: var(--space-md);
-      align-self: center;
-    }
-
-    /* Days row */
-    .days-row {
+    .player-card {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-lg);
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--glass-border);
+      cursor: default;
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .days-value {
-      font-family: var(--font-mono);
-      font-size: clamp(3.5rem, 7vw, 5.5rem);
-      font-weight: 700;
-      color: var(--text-primary);
+    .player-card:hover {
+      transform: translateX(4px);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .player-card--arg:hover { box-shadow: -3px 0 0 var(--arg-sky) inset, 0 4px 20px rgba(116,172,223,0.1); }
+    .player-card--cpv:hover { box-shadow: -3px 0 0 var(--cpv-blue) inset, 0 4px 20px rgba(0,56,147,0.15); }
+
+    .player-number {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
       line-height: 1;
-      background: linear-gradient(180deg, #ffffff, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      min-width: 24px;
+      text-align: center;
     }
 
-    .days-label {
-      font-size: 0.8rem;
+    .player-card--arg .player-number { color: var(--arg-sky); }
+    .player-card--cpv .player-number { color: var(--cpv-light); }
+
+    .player-info { flex: 1; min-width: 0; }
+
+    .player-name {
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-hi);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* ─── Watch Info Footer ─── */
-    .watch-footer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: var(--space-sm) var(--space-md);
-      padding: var(--space-md) var(--space-lg);
-      background: var(--bg-glass);
-      border-top: 1px solid var(--bg-card-border);
-    }
-
-    .watch-label {
-      font-size: 0.65rem;
+    .player-pos {
+      font-size: 0.58rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-lo);
     }
 
-    .watch-channel {
+    .player-badge {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 50px;
+    }
+
+    .player-badge--cap {
+      background: rgba(232,185,58,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(232,185,58,0.3);
+    }
+
+    .player-badge--star {
+      background: rgba(116,172,223,0.15);
+      color: var(--arg-sky);
+      border: 1px solid rgba(116,172,223,0.3);
+    }
+
+    .player-badge--cv {
+      background: rgba(0,56,147,0.2);
+      color: var(--cpv-light);
+      border: 1px solid rgba(64,96,192,0.35);
+    }
+
+    /* ── T-MINUS COUNTDOWN ── */
+    .countdown-section {
+      padding: 0 24px 28px;
+    }
+
+    .tminus-header {
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    /* Unique orbital ring animation */
+    .orbit-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 12px;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      animation: orbit-spin linear infinite;
+    }
+
+    .orbit-ring:nth-child(1) {
+      inset: 0;
+      border-top-color: var(--arg-sky);
+      border-right-color: rgba(116,172,223,0.3);
+      animation-duration: 3s;
+    }
+
+    .orbit-ring:nth-child(2) {
+      inset: 12px;
+      border-bottom-color: var(--cpv-blue);
+      border-left-color: rgba(0,56,147,0.3);
+      animation-duration: 4s;
+      animation-direction: reverse;
+    }
+
+    .orbit-ring:nth-child(3) {
+      inset: 24px;
+      border-top-color: var(--gold);
+      border-left-color: rgba(232,185,58,0.3);
+      animation-duration: 5s;
+    }
+
+    .orbit-ring:nth-child(4) {
+      inset: 36px;
+      border-bottom-color: var(--cpv-red);
+      animation-duration: 6s;
+      animation-direction: reverse;
+    }
+
+    .orbit-center {
+      position: absolute;
+      inset: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,185,58,0.3), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      animation: orb-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes orbit-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .tminus-word {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-shadow: 0 0 16px rgba(232,185,58,0.6);
+      animation: flicker 4s ease-in-out infinite;
+    }
+
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 1; }
+      97% { opacity: 0.7; }
+    }
+
+    /* Countdown units */
+    .countdown-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .cd-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cd-value {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      padding: 8px 14px;
+      border-radius: 14px;
+      min-width: clamp(72px, 13vw, 100px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s ease;
+    }
+
+    /* Gradient flips by team position */
+    .cd-days  .cd-value {
+      background: linear-gradient(160deg, rgba(116,172,223,0.12), rgba(116,172,223,0.03));
+      color: var(--arg-sky);
+      text-shadow: 0 0 30px rgba(116,172,223,0.5);
+      border-color: rgba(116,172,223,0.2);
+    }
+
+    .cd-hours .cd-value {
+      background: linear-gradient(160deg, rgba(0,56,147,0.18), rgba(0,56,147,0.04));
+      color: #7090E0;
+      text-shadow: 0 0 30px rgba(0,56,147,0.5);
+      border-color: rgba(0,56,147,0.3);
+    }
+
+    .cd-min .cd-value {
+      background: linear-gradient(160deg, rgba(207,32,39,0.18), rgba(207,32,39,0.04));
+      color: #F06070;
+      text-shadow: 0 0 30px rgba(207,32,39,0.4);
+      border-color: rgba(207,32,39,0.25);
+    }
+
+    .cd-sec .cd-value {
+      background: linear-gradient(160deg, rgba(232,185,58,0.18), rgba(232,185,58,0.04));
+      color: var(--gold);
+      text-shadow: 0 0 30px rgba(232,185,58,0.5);
+      border-color: rgba(232,185,58,0.3);
+    }
+
+    /* Flash animation on second tick */
+    .cd-value.tick {
+      animation: unit-tick 0.15s ease-out;
+    }
+
+    @keyframes unit-tick {
+      0% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    .cd-unit {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-lo);
+    }
+
+    .cd-colon {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      line-height: 1;
+      color: var(--text-lo);
+      padding-bottom: 18px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* Progress bar */
+    .countdown-progress {
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.06);
+      margin: 12px 0 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .countdown-progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--arg-sky), var(--gold), var(--cpv-blue));
+      transition: width 1s linear;
+      position: relative;
+    }
+
+    .countdown-progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 20px;
+      background: rgba(255,255,255,0.4);
+      filter: blur(4px);
+    }
+
+    /* "TO KICKOFF" label */
+    .kickoff-label {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--text-lo);
+      margin-top: 10px;
+    }
+
+    /* Win probability bar */
+    .win-prob {
+      padding: 16px 24px 0;
+    }
+
+    .win-prob-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-lo);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .prob-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .prob-team {
       font-size: 0.7rem;
       font-weight: 700;
-      color: var(--text-secondary);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--bg-card-border);
-      padding: 3px 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .prob-team--arg { color: var(--arg-sky); text-align: right; }
+    .prob-team--cpv { color: var(--cpv-light); text-align: left; }
+    .prob-extra { font-size: 0.6rem; color: var(--text-lo); text-align: center; }
+
+    .prob-bar {
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.05);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .prob-bar-arg {
+      height: 100%;
+      width: 83%;
+      background: linear-gradient(90deg, var(--arg-sky), rgba(116,172,223,0.5));
+      border-radius: 3px 0 0 3px;
+      transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .prob-bar-et {
+      height: 100%;
+      width: 12%;
+      background: rgba(232,185,58,0.4);
+    }
+
+    .prob-bar-cpv {
+      height: 100%;
+      width: 5%;
+      background: linear-gradient(90deg, rgba(0,56,147,0.5), var(--cpv-blue));
+      border-radius: 0 3px 3px 0;
+      transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── VENUE FOOTER ── */
+    .venue-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px 24px;
+      border-top: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.01);
+      margin-top: 4px;
+    }
+
+    .venue-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-mid);
+      letter-spacing: 0.04em;
+    }
+
+    .venue-info svg { width: 12px; height: 12px; opacity: 0.6; }
+    .venue-info strong { color: var(--gold); }
+
+    .watch-chips {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .watch-chip {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
       border-radius: 50px;
-      transition: background 0.2s ease, color 0.2s ease;
+      border: 1px solid var(--glass-border);
+      color: var(--text-mid);
+      background: rgba(255,255,255,0.04);
       cursor: default;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
-    .watch-channel:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-primary);
+    .watch-chip:hover {
+      background: rgba(232,185,58,0.1);
+      border-color: rgba(232,185,58,0.3);
+      color: var(--gold);
+      box-shadow: 0 0 12px rgba(232,185,58,0.15);
     }
 
-    /* ─── LIVE State ─── */
-    .broadcast-card[data-state="live"] .countdown-section {
-      padding: var(--space-2xl) var(--space-lg);
-    }
-
+    /* ── LIVE STATE ── */
     .live-state {
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: var(--space-lg);
-      animation: fadeInUp 0.6s ease-out;
+      gap: 16px;
+      padding: 40px 24px;
     }
 
-    .broadcast-card[data-state="live"] .countdown-active { display: none; }
-    .broadcast-card[data-state="live"] .live-state { display: flex; }
-
-    .live-badge-container {
-      position: relative;
-    }
+    .card[data-state="live"] .countdown-section .countdown-inner { display: none; }
+    .card[data-state="live"] .live-state { display: flex; }
 
     .live-badge {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-sm);
-      font-size: 1rem;
-      font-weight: 800;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 1.8rem;
       letter-spacing: 0.2em;
-      text-transform: uppercase;
       color: #fff;
-      background: var(--accent-live);
-      padding: 10px 32px;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      padding: 12px 36px;
       border-radius: 50px;
-      box-shadow: 0 0 30px var(--accent-live-glow), 0 0 60px rgba(239, 68, 68, 0.2);
-      animation: live-glow 2s ease-in-out infinite;
+      box-shadow: 0 0 40px rgba(239,68,68,0.5), 0 0 80px rgba(239,68,68,0.2);
+      animation: live-pulse 2s ease-in-out infinite;
     }
 
-    .live-badge .dot {
-      width: 10px;
-      height: 10px;
-      background: #fff;
+    .live-dot {
+      width: 12px; height: 12px;
       border-radius: 50%;
-      animation: pulse-ring 1.5s ease-in-out infinite;
+      background: white;
+      animation: live-blink 1.2s ease-in-out infinite;
     }
 
-    @keyframes live-glow {
-      0%, 100% { box-shadow: 0 0 30px var(--accent-live-glow), 0 0 60px rgba(239, 68, 68, 0.2); }
-      50% { box-shadow: 0 0 50px var(--accent-live-glow), 0 0 100px rgba(239, 68, 68, 0.3); }
+    @keyframes live-pulse {
+      0%,100% { box-shadow: 0 0 40px rgba(239,68,68,0.5); }
+      50% { box-shadow: 0 0 70px rgba(239,68,68,0.7), 0 0 120px rgba(239,68,68,0.3); }
     }
 
-    .live-text {
-      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-      font-weight: 700;
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
+    @keyframes live-blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .live-subtext {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-mid);
     }
 
-    .live-text strong {
-      color: var(--text-primary);
-    }
+    .live-subtext strong { color: var(--text-hi); }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ─── Responsive ─── */
+    /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
-      main { padding: var(--space-md); }
+      main { padding: 12px 12px 32px; }
 
-      .broadcast-card { border-radius: var(--radius-lg); }
+      .wc-strip { padding: 8px 14px; }
+      .wc-label { font-size: 0.9rem; }
 
-      .header-bar {
-        flex-direction: column;
-        gap: var(--space-sm);
-        text-align: center;
-      }
-
-      .teams-container {
+      .teams-section {
         grid-template-columns: 1fr;
-        gap: var(--space-md);
+        gap: 10px;
       }
 
-      .team-card {
+      .team-block {
         flex-direction: row;
         justify-content: flex-start;
-        padding: var(--space-md) var(--space-lg);
-        gap: var(--space-md);
+        padding: 14px 16px;
       }
 
-      .team-badge {
-        width: 52px;
-        height: 52px;
-      }
+      .team-block--arg:hover { transform: translateY(-4px) rotateY(0); }
+      .team-block--cpv:hover { transform: translateY(-4px) rotateY(0); }
 
-      .team-info-mobile {
-        text-align: left;
-      }
+      .flag-ring { width: 56px; height: 56px; font-size: 2.4rem; }
 
-      .vs-divider {
-        flex-direction: row;
-      }
+      .vs-center { flex-direction: row; }
 
-      .vs-badge::before,
-      .vs-badge::after {
-        width: 40px;
-        height: 1px;
-      }
+      .players-grid { grid-template-columns: 1fr; }
 
-      .vs-badge::before { top: auto; left: -48px; }
-      .vs-badge::after  { bottom: auto; right: -48px; top: auto; }
+      .countdown-row { gap: 2px; }
+      .cd-value { font-size: clamp(2rem, 9vw, 3.5rem); padding: 6px 10px; min-width: clamp(56px, 18vw, 80px); }
+      .cd-colon { font-size: clamp(1.8rem, 7vw, 2.8rem); }
 
-      .vs-badge {
-        width: 44px;
-        height: 44px;
-        font-size: 0.9rem;
-      }
-
-      .match-meta {
-        flex-direction: column;
-        gap: var(--space-xs);
-      }
-
-      .meta-dot { display: none; }
-
-      .countdown-display {
-        flex-wrap: wrap;
-        gap: var(--space-sm);
-      }
-
-      .countdown-prefix {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: var(--space-sm);
-      }
-
-      .countdown-suffix {
-        width: 100%;
-        margin-left: 0;
-        margin-top: var(--space-sm);
-      }
-
-      .watch-footer {
-        flex-direction: column;
-        gap: var(--space-sm);
-      }
+      .venue-footer { flex-direction: column; gap: 10px; text-align: center; }
     }
 
-    @media (min-width: 641px) and (max-width: 900px) {
-      .team-badge {
-        width: 60px;
-        height: 60px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
-    /* ─── Accessible focus ─── */
-    :focus-visible {
-      outline: 2px solid var(--accent-blue);
-      outline-offset: 2px;
-    }
+    :focus-visible { outline: 2px solid var(--arg-sky); outline-offset: 2px; }
   </style>
 </head>
 
 <body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="aurora" aria-hidden="true"></div>
+
   <main>
-    <article class="broadcast-card" data-state="countdown" id="broadcast-card">
+    <!-- World Cup Strip -->
+    <div class="wc-strip">
+      <span class="wc-trophy" aria-hidden="true">🏆</span>
+      <span class="wc-label">FIFA World Cup 2026™</span>
+      <span class="wc-badge">Round of 32</span>
+    </div>
 
-      <header class="header-bar">
-        <nav class="series-tag" aria-label="Series information">
-          <span class="icc-badge">ICC</span>
-          <span class="series-info">ODI Series &middot; 2 of 3 &middot; <strong>IND lead 1-0</strong></span>
-        </nav>
-        <span class="format-pill">50-Over ODI</span>
-      </header>
+    <!-- Main Card -->
+    <article class="card" id="match-card" data-state="countdown">
 
-      <section class="match-stage" aria-label="Match teams">
-        <div class="teams-container">
+      <!-- Meta Row -->
+      <div class="match-meta">
+        <span class="meta-chip">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
+          <time datetime="2026-07-04T03:30:00+05:30"><strong>Sat, Jul 4</strong> &middot; 3:30 AM IST</time>
+        </span>
+        <span class="meta-sep"></span>
+        <span class="meta-chip">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+          <strong>Miami Stadium</strong>, Miami Gardens, FL
+        </span>
+        <span class="meta-sep"></span>
+        <span class="meta-chip">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+          90 min · ET if level
+        </span>
+      </div>
 
-          <figure class="team-card team-card--ind" aria-label="India">
-            <div class="team-badge">
-              <img src="india-badge.png" alt="India Cricket" width="72" height="72" loading="eager">
+      <!-- Three.js Globe Stage -->
+      <div class="globe-stage">
+        <canvas id="three-canvas" width="180" height="180" aria-label="Rotating 3D football"></canvas>
+      </div>
+
+      <!-- Teams -->
+      <section class="teams-section" aria-label="Match teams">
+
+        <figure class="team-block team-block--arg" aria-label="Argentina">
+          <div class="flag-ring" aria-hidden="true">🇦🇷</div>
+          <figcaption>
+            <p class="team-code">ARG</p>
+            <p class="team-fullname">Argentina</p>
+            <p class="team-rank">FIFA Rank #1</p>
+          </figcaption>
+        </figure>
+
+        <div class="vs-center" role="separator" aria-hidden="true">
+          <div class="vs-orb">VS</div>
+        </div>
+
+        <figure class="team-block team-block--cpv" aria-label="Cabo Verde">
+          <div class="flag-ring" aria-hidden="true">🇨🇻</div>
+          <figcaption>
+            <p class="team-code">CPV</p>
+            <p class="team-fullname">Cabo Verde</p>
+            <p class="team-rank">FIFA Rank #52</p>
+          </figcaption>
+        </figure>
+
+      </section>
+
+      <!-- Win Probability -->
+      <div class="win-prob">
+        <p class="win-prob-label">Win Probability — 90 Min</p>
+        <div class="prob-row">
+          <span class="prob-team prob-team--arg">Argentina 83%</span>
+          <span class="prob-extra">ET 12%</span>
+          <span class="prob-team prob-team--cpv">5% Cabo Verde</span>
+        </div>
+        <div class="prob-bar">
+          <div class="prob-bar-arg"></div>
+          <div class="prob-bar-et"></div>
+          <div class="prob-bar-cpv"></div>
+        </div>
+      </div>
+
+      <!-- Players -->
+      <section class="players-section" aria-label="Key players">
+        <p class="section-eyebrow">Key Players</p>
+        <div class="players-grid">
+          <!-- Argentina -->
+          <div class="players-col" aria-label="Argentina squad">
+            <div class="player-card player-card--arg">
+              <span class="player-number">10</span>
+              <div class="player-info">
+                <p class="player-name">L. Messi</p>
+                <p class="player-pos">Forward</p>
+              </div>
+              <span class="player-badge player-badge--cap">CAP</span>
             </div>
-            <figcaption>
-              <p class="team-code">IND</p>
-              <p class="team-name">India</p>
-              <p class="team-captain">C: <strong>Shubman Gill</strong></p>
-            </figcaption>
-          </figure>
-
-          <div class="vs-divider" role="separator">
-            <span class="vs-badge" aria-hidden="true">VS</span>
+            <div class="player-card player-card--arg">
+              <span class="player-number">11</span>
+              <div class="player-info">
+                <p class="player-name">Á. Di María</p>
+                <p class="player-pos">Winger</p>
+              </div>
+              <span class="player-badge player-badge--star">★</span>
+            </div>
+            <div class="player-card player-card--arg">
+              <span class="player-number">9</span>
+              <div class="player-info">
+                <p class="player-name">J. Álvarez</p>
+                <p class="player-pos">Striker</p>
+              </div>
+            </div>
+            <div class="player-card player-card--arg">
+              <span class="player-number">8</span>
+              <div class="player-info">
+                <p class="player-name">E. Fernández</p>
+                <p class="player-pos">Midfielder</p>
+              </div>
+            </div>
           </div>
-
-          <figure class="team-card team-card--afg" aria-label="Afghanistan">
-            <div class="team-badge">
-              <img src="afg-badge.png" alt="Afghanistan Cricket" width="72" height="72" loading="eager">
+          <!-- Cabo Verde -->
+          <div class="players-col" aria-label="Cabo Verde squad">
+            <div class="player-card player-card--cpv">
+              <span class="player-number">7</span>
+              <div class="player-info">
+                <p class="player-name">D. Tavares</p>
+                <p class="player-pos">Winger</p>
+              </div>
+              <span class="player-badge player-badge--cap">CAP</span>
             </div>
-            <figcaption>
-              <p class="team-code">AFG</p>
-              <p class="team-name">Afghanistan</p>
-              <p class="team-captain">C: <strong>H. Shahidi</strong></p>
-            </figcaption>
-          </figure>
-
+            <div class="player-card player-card--cpv">
+              <span class="player-number">9</span>
+              <div class="player-info">
+                <p class="player-name">Ryan Mendes</p>
+                <p class="player-pos">Forward</p>
+              </div>
+              <span class="player-badge player-badge--cv">★</span>
+            </div>
+            <div class="player-card player-card--cpv">
+              <span class="player-number">6</span>
+              <div class="player-info">
+                <p class="player-name">H. Semedo</p>
+                <p class="player-pos">Defender</p>
+              </div>
+            </div>
+            <div class="player-card player-card--cpv">
+              <span class="player-number">1</span>
+              <div class="player-info">
+                <p class="player-name">V. Medina</p>
+                <p class="player-pos">Goalkeeper</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <aside class="match-meta" aria-label="Match details">
-        <span class="meta-item">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
-          <time datetime="2026-06-17T13:30:00+05:30">Wed, Jun 17 &middot; 1:30 PM IST</time>
-        </span>
-        <span class="meta-dot" aria-hidden="true"></span>
-        <span class="meta-item">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
-          Ekana Stadium, Lucknow
-        </span>
-        <span class="meta-dot" aria-hidden="true"></span>
-        <span class="meta-item">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
-          Day/Night
-        </span>
-      </aside>
-
+      <!-- T-Minus Countdown -->
       <section class="countdown-section" aria-label="Match countdown" aria-live="polite">
-
-        <div class="countdown-active" id="countdown-active">
-          <div class="t-minus-header">
-            <span class="pulse-dot" aria-hidden="true"></span>
-            <span class="t-minus-label">Countdown to Next Match</span>
-            <span class="pulse-dot" aria-hidden="true"></span>
+        <div class="countdown-inner" id="countdown-inner">
+          <div class="tminus-header">
+            <div class="orbit-container" aria-hidden="true">
+              <div class="orbit-ring"></div>
+              <div class="orbit-ring"></div>
+              <div class="orbit-ring"></div>
+              <div class="orbit-ring"></div>
+              <div class="orbit-center">⚽</div>
+            </div>
+            <p class="tminus-word" id="tminus-word">T — MINUS</p>
           </div>
 
-          <div class="days-row" id="days-row">
-            <span class="days-value" id="days-value">--</span>
-            <span class="days-label" id="days-label">Days</span>
-          </div>
-
-          <output class="countdown-display" id="countdown-display" role="timer">
-            <span class="countdown-prefix">T–</span>
-
-            <span class="countdown-block">
-              <span class="countdown-value" id="cd-hours">--</span>
-              <span class="countdown-unit">Hours</span>
-            </span>
-
-            <span class="countdown-separator" aria-hidden="true">:</span>
-
-            <span class="countdown-block">
-              <span class="countdown-value" id="cd-minutes">--</span>
-              <span class="countdown-unit">Min</span>
-            </span>
-
-            <span class="countdown-separator" aria-hidden="true">:</span>
-
-            <span class="countdown-block">
-              <span class="countdown-value" id="cd-seconds">--</span>
-              <span class="countdown-unit">Sec</span>
-            </span>
-
-            <span class="countdown-suffix">TO GO</span>
+          <output class="countdown-row" id="countdown-row" role="timer">
+            <div class="cd-block cd-days" id="cd-days-block">
+              <span class="cd-value" id="cd-days">--</span>
+              <span class="cd-unit">Days</span>
+            </div>
+            <span class="cd-colon" aria-hidden="true">:</span>
+            <div class="cd-block cd-hours">
+              <span class="cd-value" id="cd-hours">--</span>
+              <span class="cd-unit">Hours</span>
+            </div>
+            <span class="cd-colon" aria-hidden="true">:</span>
+            <div class="cd-block cd-min">
+              <span class="cd-value" id="cd-min">--</span>
+              <span class="cd-unit">Min</span>
+            </div>
+            <span class="cd-colon" aria-hidden="true">:</span>
+            <div class="cd-block cd-sec">
+              <span class="cd-value" id="cd-sec">--</span>
+              <span class="cd-unit">Sec</span>
+            </div>
           </output>
+
+          <div class="countdown-progress">
+            <div class="countdown-progress-fill" id="progress-fill" style="width: 0%"></div>
+          </div>
+          <p class="kickoff-label">TO KICKOFF</p>
         </div>
 
         <div class="live-state" id="live-state">
-          <div class="live-badge-container">
-            <span class="live-badge"><span class="dot"></span> MATCH IS LIVE</span>
+          <div class="live-badge">
+            <span class="live-dot"></span>
+            MATCH IS LIVE
           </div>
-          <p class="live-text"><strong>India vs Afghanistan</strong> &mdash; 2nd ODI has started!</p>
+          <p class="live-subtext"><strong>Argentina vs Cabo Verde</strong> — It's kicked off at Miami!</p>
         </div>
-
       </section>
 
-      <footer class="watch-footer">
-        <span class="watch-label">Watch Live On</span>
-        <span class="watch-channel">Star Sports</span>
-        <span class="watch-channel">JioHotstar</span>
+      <!-- Footer -->
+      <footer class="venue-footer">
+        <div class="venue-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+          Venue: <strong>Hard Rock / Miami Stadium</strong> · Miami Gardens, FL, USA
+        </div>
+        <div class="watch-chips">
+          <span class="watch-label" style="font-size:0.6rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-lo);">Watch:</span>
+          <span class="watch-chip">Fox Sports</span>
+          <span class="watch-chip">JioHotstar</span>
+          <span class="watch-chip">FIFA+</span>
+        </div>
       </footer>
 
     </article>
   </main>
 
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <script>
-    (function () {
-      'use strict';
+  (function () {
+    'use strict';
 
-      const MATCH_DATE = new Date('2026-06-17T13:30:00+05:30');
+    /* ── PARTICLE BACKGROUND ── */
+    const bgCanvas = document.getElementById('bg-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let W, H, particles = [];
 
-      const card   = document.getElementById('broadcast-card');
-      const daysEl = document.getElementById('days-value');
-      const daysLb = document.getElementById('days-label');
-      const daysRw = document.getElementById('days-row');
-      const hoursEl   = document.getElementById('cd-hours');
-      const minutesEl = document.getElementById('cd-minutes');
-      const secondsEl = document.getElementById('cd-seconds');
+    function resizeBg() {
+      W = bgCanvas.width = window.innerWidth;
+      H = bgCanvas.height = window.innerHeight;
+    }
 
-      function pad(n) {
-        return String(n).padStart(2, '0');
-      }
-
-      function tick() {
-        const now  = Date.now();
-        const diff = MATCH_DATE.getTime() - now;
-
-        if (diff <= 0) {
-          card.setAttribute('data-state', 'live');
-          return;
-        }
-
-        const totalSeconds = Math.floor(diff / 1000);
-        const days    = Math.floor(totalSeconds / 86400);
-        const hours   = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        if (days > 0) {
-          daysRw.style.display = '';
-          daysEl.textContent = pad(days);
-          daysLb.textContent = days === 1 ? 'Day' : 'Days';
-        } else {
-          daysRw.style.display = 'none';
-        }
-
-        hoursEl.textContent   = pad(hours);
-        minutesEl.textContent = pad(minutes);
-        secondsEl.textContent = pad(seconds);
-
-        requestAnimationFrame(() => {
-          setTimeout(tick, 1000 - (Date.now() % 1000));
+    function spawnParticles() {
+      particles = [];
+      const count = Math.floor((W * H) / 18000);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.2 + 0.3,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.15,
+          alpha: Math.random() * 0.4 + 0.1,
+          color: Math.random() > 0.5 ? '116,172,223' : '0,56,147'
         });
       }
+    }
 
-      tick();
+    function animateBg() {
+      bgCtx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = W;
+        if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        if (p.y > H) p.y = 0;
+        bgCtx.beginPath();
+        bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        bgCtx.fillStyle = `rgba(${p.color},${p.alpha})`;
+        bgCtx.fill();
+      }
+      requestAnimationFrame(animateBg);
+    }
+
+    resizeBg();
+    spawnParticles();
+    animateBg();
+    window.addEventListener('resize', () => { resizeBg(); spawnParticles(); });
+
+    /* ── THREE.JS FOOTBALL ── */
+    (function () {
+      const canvas = document.getElementById('three-canvas');
+      if (!window.THREE) return;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(180, 180);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x000000, 0);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+      camera.position.set(0, 0, 4.5);
+
+      /* Sphere base */
+      const sphereGeo = new THREE.SphereGeometry(1.1, 64, 64);
+
+      /* Create football texture on a canvas */
+      const texCanvas = document.createElement('canvas');
+      texCanvas.width = 512; texCanvas.height = 512;
+      const tc = texCanvas.getContext('2d');
+
+      /* White base */
+      tc.fillStyle = '#FFFFFF';
+      tc.fillRect(0, 0, 512, 512);
+
+      /* Black pentagons pattern approximation */
+      const patches = [
+        [256, 256], [256, 100], [256, 412],
+        [130, 178], [382, 178], [130, 334], [382, 334],
+        [100, 256], [412, 256],
+        [180, 80], [332, 80], [180, 432], [332, 432],
+        [80, 180], [432, 180], [80, 332], [432, 332],
+      ];
+
+      function drawPentagon(cx, cy, r, color) {
+        tc.beginPath();
+        for (let i = 0; i < 5; i++) {
+          const angle = (i * 2 * Math.PI / 5) - Math.PI / 2;
+          if (i === 0) tc.moveTo(cx + r * Math.cos(angle), cy + r * Math.sin(angle));
+          else tc.lineTo(cx + r * Math.cos(angle), cy + r * Math.sin(angle));
+        }
+        tc.closePath();
+        tc.fillStyle = color;
+        tc.fill();
+        tc.strokeStyle = '#FFFFFF';
+        tc.lineWidth = 3;
+        tc.stroke();
+      }
+
+      patches.forEach(([x, y], i) => {
+        const colors = ['#1a1a1a', '#74ACDF', '#003893', '#CF2027', '#F7D116'];
+        drawPentagon(x, y, 32, colors[i % 5]);
+      });
+
+      const texture = new THREE.CanvasTexture(texCanvas);
+
+      const sphereMat = new THREE.MeshStandardMaterial({
+        map: texture,
+        roughness: 0.4,
+        metalness: 0.05,
+      });
+
+      const football = new THREE.Mesh(sphereGeo, sphereMat);
+      scene.add(football);
+
+      /* Glow halo */
+      const haloGeo = new THREE.SphereGeometry(1.18, 32, 32);
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: 0x74ACDF,
+        transparent: true,
+        opacity: 0.06,
+        side: THREE.BackSide,
+      });
+      const halo = new THREE.Mesh(haloGeo, haloMat);
+      scene.add(halo);
+
+      /* Lights */
+      const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambient);
+
+      const keyLight = new THREE.DirectionalLight(0x74ACDF, 1.4);
+      keyLight.position.set(3, 3, 5);
+      scene.add(keyLight);
+
+      const fillLight = new THREE.DirectionalLight(0x003893, 0.8);
+      fillLight.position.set(-3, -1, -3);
+      scene.add(fillLight);
+
+      const goldLight = new THREE.PointLight(0xE8B93A, 0.5, 10);
+      goldLight.position.set(0, 2, 3);
+      scene.add(goldLight);
+
+      /* Mouse drag */
+      let isDragging = false;
+      let prevMouse = { x: 0, y: 0 };
+      let velocity = { x: 0, y: 0 };
+
+      canvas.addEventListener('mousedown', e => {
+        isDragging = true;
+        prevMouse = { x: e.clientX, y: e.clientY };
+        velocity = { x: 0, y: 0 };
+      });
+
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const dx = e.clientX - prevMouse.x;
+        const dy = e.clientY - prevMouse.y;
+        velocity = { x: dy * 0.005, y: dx * 0.005 };
+        football.rotation.x += velocity.x;
+        football.rotation.y += velocity.y;
+        prevMouse = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      /* Touch */
+      canvas.addEventListener('touchstart', e => {
+        isDragging = true;
+        prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        velocity = { x: 0, y: 0 };
+        e.preventDefault();
+      }, { passive: false });
+
+      window.addEventListener('touchmove', e => {
+        if (!isDragging) return;
+        const dx = e.touches[0].clientX - prevMouse.x;
+        const dy = e.touches[0].clientY - prevMouse.y;
+        velocity = { x: dy * 0.005, y: dx * 0.005 };
+        football.rotation.x += velocity.x;
+        football.rotation.y += velocity.y;
+        prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      });
+
+      window.addEventListener('touchend', () => { isDragging = false; });
+
+      let time = 0;
+      function renderLoop() {
+        requestAnimationFrame(renderLoop);
+        time += 0.008;
+
+        if (!isDragging) {
+          velocity.x *= 0.95;
+          velocity.y *= 0.95;
+          football.rotation.x += velocity.x + 0.002;
+          football.rotation.y += velocity.y + 0.006;
+        }
+
+        /* Subtle bob */
+        football.position.y = Math.sin(time) * 0.05;
+        goldLight.position.x = Math.sin(time * 0.7) * 2;
+        goldLight.position.y = Math.cos(time * 0.5) * 2;
+
+        /* Halo pulse */
+        haloMat.opacity = 0.04 + Math.sin(time * 2) * 0.03;
+
+        renderer.render(scene, camera);
+      }
+
+      renderLoop();
     })();
+
+    /* ── COUNTDOWN ── */
+    const KICKOFF = new Date('2026-07-04T03:30:00+05:30');
+    /* Reference time (when page was first made, used for progress) */
+    const PAGE_START = new Date('2026-06-27T00:00:00+05:30');
+    const TOTAL_DURATION = KICKOFF.getTime() - PAGE_START.getTime();
+
+    const card     = document.getElementById('match-card');
+    const elDays   = document.getElementById('cd-days');
+    const elHours  = document.getElementById('cd-hours');
+    const elMin    = document.getElementById('cd-min');
+    const elSec    = document.getElementById('cd-sec');
+    const daysBlock = document.getElementById('cd-days-block');
+    const progressFill = document.getElementById('progress-fill');
+    const tmWord   = document.getElementById('tminus-word');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function flashTick(el) {
+      el.classList.remove('tick');
+      void el.offsetWidth; // reflow
+      el.classList.add('tick');
+    }
+
+    let prevSec = -1;
+
+    function tick() {
+      const now  = Date.now();
+      const diff = KICKOFF.getTime() - now;
+
+      if (diff <= 0) {
+        card.setAttribute('data-state', 'live');
+        return;
+      }
+
+      const totalSec = Math.floor(diff / 1000);
+      const days     = Math.floor(totalSec / 86400);
+      const hours    = Math.floor((totalSec % 86400) / 3600);
+      const mins     = Math.floor((totalSec % 3600) / 60);
+      const secs     = totalSec % 60;
+
+      const secVal = pad(secs);
+      if (secVal !== prevSec) {
+        flashTick(elSec);
+        prevSec = secVal;
+      }
+
+      /* Show/hide days block */
+      daysBlock.style.display = days > 0 ? '' : 'none';
+      const prevDays = elDays.textContent;
+      const newDays = pad(days);
+      if (newDays !== prevDays) flashTick(elDays);
+      elDays.textContent = newDays;
+      elHours.textContent = pad(hours);
+      elMin.textContent   = pad(mins);
+      elSec.textContent   = secVal;
+
+      /* Progress bar */
+      const elapsed = now - PAGE_START.getTime();
+      const pct = Math.min(100, Math.max(0, (elapsed / TOTAL_DURATION) * 100));
+      progressFill.style.width = pct + '%';
+
+      /* T-minus label cycles */
+      const labels = ['T — MINUS', 'COUNTDOWN', 'T — MINUS', 'TO KICKOFF'];
+      const idx = Math.floor(Date.now() / 5000) % labels.length;
+      tmWord.textContent = labels[idx];
+
+      setTimeout(tick, 1000 - (Date.now() % 1000));
+    }
+
+    tick();
+
+    /* ── 3D HOVER TILT on card ── */
+    const mainCard = document.querySelector('.card');
+    mainCard.addEventListener('mousemove', e => {
+      const rect = mainCard.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      mainCard.style.transform = `perspective(1200px) rotateY(${dx * 2.5}deg) rotateX(${-dy * 1.5}deg)`;
+    });
+
+    mainCard.addEventListener('mouseleave', () => {
+      mainCard.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
+      mainCard.style.transition = 'transform 0.6s cubic-bezier(0.34,1.56,0.64,1)';
+    });
+
+    mainCard.addEventListener('mouseenter', () => {
+      mainCard.style.transition = 'transform 0.12s ease';
+    });
+
+  })();
   </script>
 </body>
 </html>
